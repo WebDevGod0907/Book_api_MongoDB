@@ -1,13 +1,21 @@
+require("dotenv").config();
 const express=require("express");
+const mongoose=require("mongoose")
 //Database
 const database=require("./databas")
 //Initialization
 const booky=express();
 //configuration
 booky.use(express.json());
-
+//Establish Database Connection
+mongoose.connect(process.env.MONGO_URL,{
+    useNewUrlParser:true,
+    useUnifiedTopology:true,
+    
+}
+).then(()=>console.log("connection established !!!!!"));
 /*
-Route -  /book
+Route -  /bo
 Description - get all books
 Access-public
 Parameter-none
