@@ -3,6 +3,11 @@ const express=require("express");
 const mongoose=require("mongoose")
 //Database
 const database=require("./databas")
+
+//model
+const BookModel=require("./database/book")
+const AuthorModel=require("./database/author")
+const PublicationModel=require("./database/publication")
 //Initialization
 const booky=express();
 //configuration
@@ -15,14 +20,15 @@ mongoose.connect(process.env.MONGO_URL,{
 }
 ).then(()=>console.log("connection established !!!!!"));
 /*
-Route -  /bo
+Route -  /book
 Description - get all books
 Access-public
 Parameter-none
 Methods-get
 */
-booky.get ("/book",(req,res)=>{
-    return res.json({"book":database.books})
+booky.get ("/book",async(req,res)=>{
+    const getAllBooks=await BookModel.find();
+    return res.json(getAllBooks)
 })
 
 /*
@@ -33,9 +39,9 @@ Parameter-isbn
 Methods-get
 */
 
-booky.get("/book/is/:isbn",(req,res)=>{
-    const getSpecificBook=database.books.filter((book)=> book.ISBN===req.params.isbn)
-    if (getSpecificBook.length===0)
+booky.get("/book/is/:isbn",async(req,res)=>{
+    const getSpecificBook=await BookModel.findOne({ISBN:req.params.isbn});
+    if (!getSpecificBook)
     {
     return res.json({error:`No Book found for the ISBN of ${req.params.isbn}`
     })
