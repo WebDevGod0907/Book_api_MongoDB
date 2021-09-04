@@ -1,5 +1,5 @@
 /node_modules
- 
+/file_for_command
 package-lock.json
 
 .env
