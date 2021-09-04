@@ -84,11 +84,18 @@ Access-public
 Parameter-none
 Methods-post
 */
-Router.post("/add",(req,res)=>{
-    const {newBook}=req.body
-    BookModel.create(newBook);
+Router.post("/add",async(req,res)=>{
+    try {
+        const {newBook}=req.body
+    await BookModel.create(newBook);
     return res.json({message:"Book was added"})
+        
+    } catch (error) {
+        return res.json({error:error.message});
+    }
+    
     })
+
 
 /********PUT********/
 /*

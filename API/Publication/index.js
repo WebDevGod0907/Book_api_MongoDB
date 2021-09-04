@@ -72,10 +72,15 @@ Access-public
 Parameter-none
 Methods-post
 */
-Router.post("/add",(req,res)=>{
-    const {newPublication}=req.body
-PublicationModel.create(newPublication)
+Router.post("/add",async(req,res)=>{
+    try {
+        const {newPublication}=req.body
+await PublicationModel.create(newPublication)
 return res.json({message:"Publication was added"})
+    } catch (error) {
+        return res.json({error:error.message});
+    }
+    
 })
 
 /**********put*********/

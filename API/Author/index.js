@@ -72,10 +72,16 @@ Access-public
 Parameter-none
 Methods-post
 */
-Router.post("/add",(req,res)=>{
-    const {newAuthor}=req.body
-AuthorModel.create(newAuthor)
+Router.post("/add",async(req,res)=>{
+    try {
+        const {newAuthor}=req.body
+await AuthorModel.create(newAuthor)
 return res.json({message:"Author was added"})
+        
+    } catch (error) {
+        return res.json({error:error.message});
+    }
+    
 })
 
 
